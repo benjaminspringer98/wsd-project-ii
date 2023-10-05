@@ -19,7 +19,7 @@
 
 <% } else { %>
 
-<p>No topics.</p>
+<p>No topics</p>
 
 <% } %>
 
