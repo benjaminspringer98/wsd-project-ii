@@ -8,7 +8,7 @@ const userMiddleware = async (context, next) => {
     const user = userFromDatabase[0];
 
     //shouldn't store password in context, even if hashed
-    context.user = { id: user.id, email: user.email };
+    context.user = { id: user.id, email: user.email, isAdmin: user.admin };
   }
 
   await next();

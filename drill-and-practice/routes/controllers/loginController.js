@@ -34,7 +34,7 @@ const login = async ({ request, response, state, render }) => {
   }
 
   //shouldn't store password in session, even if hashed
-  const sessionUser = { id: user.id, email: user.email };
+  const sessionUser = { id: user.id, email: user.email, isAdmin: user.admin };
   await state.session.set("user", sessionUser);
   response.redirect("/topics");
 };

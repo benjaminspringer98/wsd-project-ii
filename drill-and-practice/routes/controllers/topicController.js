@@ -13,7 +13,12 @@ const getTopicData = async (request) => {
   };
 };
 
-const create = async ({ request, response, render }) => {
+const create = async ({ request, response, render, user }) => {
+  if (!user.isAdmin) {
+    response.status = 403;
+    return;
+  }
+
   const topicData = await getTopicData(request);
 
   const [passes, errors] = await validasaur.validate(
@@ -34,7 +39,7 @@ const create = async ({ request, response, render }) => {
     });
   } else {
     await topicService.create(
-      1,
+      user.id,
       topicData.name,
     );
 
@@ -48,7 +53,11 @@ const list = async ({ render }) => {
   });
 };
 
-const remove = async ({ params, response }) => {
+const remove = async ({ params, response, user }) => {
+  if (!user.isAdmin) {
+    response.status = 403;
+    return;
+  }
   await topicService.deleteById(params.id);
 
   response.redirect("/topics");

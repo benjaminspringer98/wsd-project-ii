@@ -4,7 +4,7 @@ import { validasaur } from "../../deps.js";
 
 const userValidationRules = {
   email: [validasaur.required, validasaur.isEmail],
-  password: [validasaur.required, validasaur.minLength(1)],
+  password: [validasaur.required, validasaur.minLength(4)],
 };
 
 const getUserData = async (request) => {
