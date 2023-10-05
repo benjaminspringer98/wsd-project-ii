@@ -1,1 +1,11 @@
+<% if (it.user) { %>
+<ul>
+    <li><a href="/topics">Topics</a></li>
+    <li><a href="#">Quiz</a></li>
+    <form method="POST" action="/auth/logout">
+      <input type="submit" value="Logout"/>
+    </form>
+</ul>
+<% } %>
+
 <%~ it.body %>
