@@ -109,11 +109,11 @@ const addAnswerOption = async ({ params, request, response, render }) => {
 };
 
 const deleteQuestion = async ({ params, response }) => {
-  const hasAnswerOptions = questionService.findAnswerOptionsByQuestionId(
+  const answerOptions = await questionService.findAnswerOptionsByQuestionId(
     params.qId,
-  ).length != 0;
+  );
 
-  if (!hasAnswerOptions) {
+  if (answerOptions.length === 0) {
     await questionService.deleteQuestionById(params.qId);
     response.redirect(`/topics/${params.tId}`);
   } else {

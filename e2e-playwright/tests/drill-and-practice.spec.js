@@ -18,7 +18,7 @@ test("Unauthenticated user gets redirected to /auth/login", async ({ page }) => 
   await expect(page.locator("h1")).toHaveText("Login");
 });
 
-test("/topics shows list of topics", async ({ page }) => {
+test("Authenticated user can view list of topics", async ({ page }) => {
   const { email, password } = await register(page);
   await login(email, password, page);
 
@@ -114,7 +114,9 @@ test("Authenticated user can delete question answer option", async ({ page }) =>
   await page.locator("#addAnswerOptionBtn").click();
 
   await page.locator("#deleteAnswerOptionBtn").click();
-  await expect(page.locator(`#answerOptions tr td >> text='${answerOptionText}'`))
+  await expect(
+    page.locator(`#answerOptions tr td >> text='${answerOptionText}'`),
+  )
     .toHaveCount(0);
 });
 

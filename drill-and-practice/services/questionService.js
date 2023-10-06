@@ -27,10 +27,7 @@ const addAnswerOption = async (questionId, text, isCorrect) => {
 };
 
 const findAnswerOptionsByQuestionId = async (questionId) => {
-  const rows =
-    await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId}`;
-  console.log(rows);
-  return rows;
+  return await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId}`;
 };
 
 const deleteAnswerOptionById = async (answerOptionId) => {
