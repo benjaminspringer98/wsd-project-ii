@@ -4,7 +4,7 @@
 
 <% if (it.topics && it.topics.length > 0) { %>
 
-<ul>
+<ul id="topics">
 <% it.topics.forEach(topic => { %>
   <li>
     <a href="/topics/<%= topic.id %>"> <%= topic.name %> </a>

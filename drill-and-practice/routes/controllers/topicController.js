@@ -1,4 +1,5 @@
 import * as topicService from "../../services/topicService.js";
+import * as questionService from "../../services/questionService.js";
 import { validasaur } from "../../deps.js";
 
 const topicValidationRules = {
@@ -64,12 +65,9 @@ const remove = async ({ params, response, user }) => {
 };
 
 const view = async ({ params, render }) => {
-  console.log({
-    topic: await topicService.findById(params.id),
-  });
-
   render("topic.eta", {
     topic: await topicService.findById(params.id),
+    questions: await questionService.findAllByTopicId(params.id),
   });
 };
 

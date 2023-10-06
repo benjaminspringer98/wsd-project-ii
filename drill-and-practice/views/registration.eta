@@ -14,10 +14,10 @@
 
 <form method="POST" action="/auth/register">
   Email:<br/>
-  <input type="email" name="email" value="<%= it.email ? it.email : "" %>"/><br/>
+  <input type="email" name="email" id="email" value="<%= it.email ? it.email : "" %>"/><br/>
   Password:<br/>
-  <input type="password" name="password" /><br/>
-  <input type="submit" value="Register" />
+  <input type="password" name="password" id="password"/><br/>
+  <input type="submit" value="Register" id="registerBtn"/>
 </form>
 
 <a href="/auth/login">Already registered? Login here.</a>
