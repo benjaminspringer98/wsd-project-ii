@@ -18,7 +18,4 @@ jobs:
           deno-version: "v1.37.0"
 
       - name: Run Playwright tests
-        run: |
-          docker-compose run --entrypoint=npx e2e-playwright playwright test && docker-compose rm -sf
-        container:
-          image: mcr.microsoft.com/playwright:v1.38.0  # Use a compatible x86_64 image
+        run: docker-compose run --entrypoint=npx e2e-playwright playwright test && docker-compose rm -sf
