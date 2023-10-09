@@ -1,4 +1,5 @@
 import { sql } from "../database/database.js";
+import * as questionService from "./questionService.js";
 
 const findAll = async () => {
   return await sql`SELECT * FROM topics ORDER BY name ASC`;
@@ -19,7 +20,14 @@ const create = async (userId, name) => {
 };
 
 const deleteById = async (id) => {
+  await questionService.deleteMultipleByTopicId(id);
+  // delete topic
   await sql`DELETE FROM topics WHERE id = ${id}`;
 };
 
-export { create, deleteById, findAll, findById };
+const getCount = async () => {
+  const rows = await sql`SELECT COUNT(*) FROM topics`;
+  return Number(rows[0].count);
+};
+
+export { create, deleteById, findAll, findById, getCount };

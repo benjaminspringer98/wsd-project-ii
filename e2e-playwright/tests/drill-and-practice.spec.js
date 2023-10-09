@@ -18,11 +18,44 @@ test("Unauthenticated user gets redirected to /auth/login", async ({ page }) => 
   await expect(page.locator("h1")).toHaveText("Login");
 });
 
+// test("Authenticated user can do quiz and gets shown feedback on correct answer", async ({ page }) => {
+//   const { email, password } = await register(page);
+//   await login(email, password, page);
+
+//   await page.goto("/topics");
+//   const topicName = "Finnish language";
+//   await page.locator(`#topics li >> text='${topicName}'`).click();
+//   const questionText = randomString(5);
+//   await page.locator("#question_text").type(questionText);
+//   await page.locator("#createQuestionBtn").click();
+//   await page.locator(`#questions li a >> text='${questionText}'`).click();
+
+//   const correctAnswerOptionText = randomString(10);
+//   await page.locator("#option_text").type(correctAnswerOptionText);
+//   await page.locator("#is_correct").check();
+//   await page.locator("#addAnswerOptionBtn").click();
+//   const incorrectAnswerOptionText = randomString(10);
+//   await page.locator("#option_text").type(incorrectAnswerOptionText);
+//   await page.locator("#addAnswerOptionBtn").click();
+
+//   await page.goto("/quiz");
+//   await page.locator(`#topics li >> text='${topicName}'`).click();
+
+//   await page.locator(
+//     `#answerOptions tr td >> text='${correctAnswerOptionText}'`,
+//   ).locator("~ td input[type=submit]").click();
+
+//   await expect(page.locator("h2")).toHaveText("Correct!");
+// });
+
 test("Authenticated user can view list of topics", async ({ page }) => {
   const { email, password } = await register(page);
   await login(email, password, page);
 
-  await expect(page.locator("#topics li a")).toHaveText("Finnish language");
+  const topicName = "Finnish language";
+  await expect(page.locator(`#topics li a >> text='${topicName}'`)).toHaveText(
+    topicName,
+  );
 });
 
 test("Authenticated user can create question", async ({ page }) => {

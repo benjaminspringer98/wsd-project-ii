@@ -1,4 +1,4 @@
-const restrictedPaths = ["/topics"];
+const restrictedPaths = ["/topics", "/quiz"];
 
 const authMiddleware = async (context, next) => {
   const user = await context.state.session.get("user");

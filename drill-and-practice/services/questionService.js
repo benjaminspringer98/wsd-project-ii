@@ -1,11 +1,19 @@
 import { sql } from "../database/database.js";
+import * as answerService from "./answerService.js";
 
 const create = async (userId, topicId, text) => {
   await sql`INSERT INTO questions (user_id, topic_id, question_text) VALUES (${userId}, ${topicId}, ${text})`;
 };
 
-const deleteQuestionById = async (questionId) => {
+const deleteById = async (questionId) => {
+  await answerService.deleteAnswerOptionsByQuestionId(questionId);
   await sql`DELETE FROM questions WHERE id = ${questionId}`;
+};
+
+const deleteMultipleByTopicId = async (topicId) => {
+  await answerService.deleteAnswerOptionsByTopicId(topicId);
+  //delete questions
+  await sql`DELETE FROM questions WHERE topic_id = ${topicId}`;
 };
 
 const findAllByTopicId = async (topicId) => {
@@ -22,24 +30,39 @@ const findById = async (id) => {
   return { id: 0, question_text: "Unknown" };
 };
 
-const addAnswerOption = async (questionId, text, isCorrect) => {
-  await sql`INSERT INTO question_answer_options (question_id, option_text, is_correct) VALUES (${questionId}, ${text}, ${isCorrect})`;
+const getRandomForTopicId = async (topicId) => {
+  const rows =
+    await sql` SELECT * FROM questions WHERE topic_id = ${topicId} ORDER BY random() LIMIT 1`;
+
+  if (rows && rows.length > 0) {
+    return rows[0];
+  }
+
+  return false;
 };
 
-const findAnswerOptionsByQuestionId = async (questionId) => {
-  return await sql`SELECT * FROM question_answer_options WHERE question_id = ${questionId}`;
+const getRandom = async () => {
+  const rows = await sql` SELECT * FROM questions ORDER BY random() LIMIT 1`;
+
+  if (rows && rows.length > 0) {
+    return rows[0];
+  }
+
+  return false;
 };
 
-const deleteAnswerOptionById = async (answerOptionId) => {
-  await sql`DELETE FROM question_answer_options WHERE id = ${answerOptionId}`;
+const getCount = async () => {
+  const rows = await sql`SELECT COUNT(*) FROM questions`;
+  return Number(rows[0].count);
 };
 
 export {
-  addAnswerOption,
   create,
-  deleteAnswerOptionById,
-  deleteQuestionById,
+  deleteById,
+  deleteMultipleByTopicId,
   findAllByTopicId,
-  findAnswerOptionsByQuestionId,
   findById,
+  getCount,
+  getRandom,
+  getRandomForTopicId,
 };

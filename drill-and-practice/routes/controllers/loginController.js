@@ -45,8 +45,12 @@ const logout = async ({ response, state }) => {
   response.redirect("/auth/login");
 };
 
-const showLoginForm = ({ render }) => {
-  render("login.eta");
+const showLoginForm = ({ render, user, response }) => {
+  if (!user) {
+    render("login.eta");
+  } else {
+    response.redirect("/topics");
+  }
 };
 
 export { login, logout, showLoginForm };

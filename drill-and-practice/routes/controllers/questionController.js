@@ -1,12 +1,9 @@
 import * as questionService from "../../services/questionService.js";
 import * as topicService from "../../services/topicService.js";
+import * as answerService from "../../services/answerService.js";
 import { validasaur } from "../../deps.js";
 
 const questionValidationRules = {
-  text: [validasaur.required, validasaur.minLength(1)],
-};
-
-const answerOptionValidationRules = {
   text: [validasaur.required, validasaur.minLength(1)],
 };
 
@@ -15,15 +12,6 @@ const getQuestionData = async (request) => {
   const params = await body.value;
   return {
     text: params.get("question_text"),
-  };
-};
-
-const getAnswerOptionData = async (request) => {
-  const body = request.body({ type: "form" });
-  const params = await body.value;
-  return {
-    text: params.get("option_text"),
-    isCorrect: params.get("is_correct") ? true : false,
   };
 };
 
@@ -65,66 +53,23 @@ const view = async ({ params, render }) => {
   render("question.eta", {
     topic: await topicService.findById(params.tId),
     question: await questionService.findById(params.qId),
-    answerOptions: await questionService.findAnswerOptionsByQuestionId(
+    answerOptions: await answerService.findAnswerOptionsByQuestionId(
       params.qId,
     ),
   });
 };
 
-const addAnswerOption = async ({ params, request, response, render }) => {
-  const answerOptionData = await getAnswerOptionData(request);
-  const topicId = params.tId;
-  const questionId = params.qId;
-
-  const [passes, errors] = await validasaur.validate(
-    answerOptionData,
-    answerOptionValidationRules,
-  );
-
-  const topic = await topicService.findById(topicId);
-  const question = await questionService.findById(questionId);
-  const answerOptions = await questionService.findAnswerOptionsByQuestionId(
-    questionId,
-  );
-
-  if (!passes) {
-    console.log(errors);
-    answerOptionData.validationErrors = errors;
-
-    render("question.eta", {
-      ...answerOptionData,
-      topic,
-      question,
-      answerOptions,
-    });
-  } else {
-    await questionService.addAnswerOption(
-      questionId,
-      answerOptionData.text,
-      answerOptionData.isCorrect,
-    );
-
-    response.redirect(`/topics/${topicId}/questions/${questionId}`);
-  }
-};
-
-const deleteQuestion = async ({ params, response }) => {
-  const answerOptions = await questionService.findAnswerOptionsByQuestionId(
+const remove = async ({ params, response }) => {
+  const answerOptions = await answerService.findAnswerOptionsByQuestionId(
     params.qId,
   );
 
   if (answerOptions.length === 0) {
-    await questionService.deleteQuestionById(params.qId);
+    await questionService.deleteById(params.qId);
     response.redirect(`/topics/${params.tId}`);
   } else {
     response.status = 400;
   }
 };
 
-const deleteAnswerOption = async ({ params, response }) => {
-  await questionService.deleteAnswerOptionById(params.oId);
-
-  response.redirect(`/topics/${params.tId}/questions/${params.qId}`);
-};
-
-export { addAnswerOption, create, deleteAnswerOption, deleteQuestion, view };
+export { create, remove, view };
