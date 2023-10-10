@@ -15,7 +15,7 @@ const getRandomQuestion = async ({ params, response, render }) => {
   if (!question) {
     render("quizTopics.eta", {
       topics: await topicService.findAll(),
-      message: "No questions so far",
+      message: "No questions in this topic",
     });
   } else {
     response.redirect(`/quiz/${topicId}/questions/${question.id}`);

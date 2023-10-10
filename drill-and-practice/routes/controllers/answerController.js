@@ -10,6 +10,7 @@ const answerOptionValidationRules = {
 const getAnswerOptionData = async (request) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
+
   return {
     text: params.get("option_text"),
     isCorrect: params.get("is_correct") ? true : false,

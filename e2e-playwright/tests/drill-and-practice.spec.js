@@ -53,7 +53,7 @@ test("Authenticated user can view list of topics", async ({ page }) => {
   await login(email, password, page);
 
   const topicName = "Finnish language";
-  await expect(page.locator(`#topics li a >> text='${topicName}'`)).toHaveText(
+  await expect(page.locator(`a >> text='${topicName}'`)).toHaveText(
     topicName,
   );
 });
@@ -64,12 +64,12 @@ test("Authenticated user can create question", async ({ page }) => {
 
   await page.goto("/topics");
   const topicName = "Finnish language";
-  await page.locator(`#topics li >> text='${topicName}'`).click();
+  await page.locator(`a >> text='${topicName}'`).click();
   const questionText = randomString(5);
   await page.locator("#question_text").type(questionText);
   await page.locator("#createQuestionBtn").click();
 
-  await expect(page.locator(`#questions li a >> text='${questionText}'`))
+  await expect(page.locator(`a >> text='${questionText}'`))
     .toHaveText(
       questionText,
     );
@@ -81,13 +81,13 @@ test("Authenticated user can view created question", async ({ page }) => {
 
   await page.goto("/topics");
   const topicName = "Finnish language";
-  await page.locator(`#topics li >> text='${topicName}'`).click();
+  await page.locator(`a >> text='${topicName}'`).click();
   const questionText = randomString(5);
   await page.locator("#question_text").type(questionText);
   await page.locator("#createQuestionBtn").click();
-  await page.locator(`#questions li a >> text='${questionText}'`).click();
+  await page.locator(`a >> text='${questionText}'`).click();
 
-  await expect(page.locator("h2")).toHaveText(questionText);
+  await expect(page.locator("h3")).toHaveText(questionText);
 });
 
 test("Authenticated user can delete question with no answer options", async ({ page }) => {
@@ -96,14 +96,14 @@ test("Authenticated user can delete question with no answer options", async ({ p
 
   await page.goto("/topics");
   const topicName = "Finnish language";
-  await page.locator(`#topics li >> text='${topicName}'`).click();
+  await page.locator(`a >> text='${topicName}'`).click();
   const questionText = randomString(5);
   await page.locator("#question_text").type(questionText);
   await page.locator("#createQuestionBtn").click();
-  await page.locator(`#questions li a >> text='${questionText}'`).click();
+  await page.locator(`a >> text='${questionText}'`).click();
 
   await page.locator("#deleteQuestionBtn").click();
-  await expect(page.locator(`#questions li a >> text='${questionText}'`))
+  await expect(page.locator(`a >> text='${questionText}'`))
     .toHaveCount(0);
 });
 
@@ -113,11 +113,11 @@ test("Authenticated user can create question answer option", async ({ page }) =>
 
   await page.goto("/topics");
   const topicName = "Finnish language";
-  await page.locator(`#topics li >> text='${topicName}'`).click();
+  await page.locator(`a >> text='${topicName}'`).click();
   const questionText = randomString(5);
   await page.locator("#question_text").type(questionText);
   await page.locator("#createQuestionBtn").click();
-  await page.locator(`#questions li a >> text='${questionText}'`).click();
+  await page.locator(`a >> text='${questionText}'`).click();
 
   const answerOptionText = randomString(10);
   await page.locator("#option_text").type(answerOptionText);
@@ -136,11 +136,11 @@ test("Authenticated user can delete question answer option", async ({ page }) =>
 
   await page.goto("/topics");
   const topicName = "Finnish language";
-  await page.locator(`#topics li >> text='${topicName}'`).click();
+  await page.locator(`a >> text='${topicName}'`).click();
   const questionText = randomString(5);
   await page.locator("#question_text").type(questionText);
   await page.locator("#createQuestionBtn").click();
-  await page.locator(`#questions li a >> text='${questionText}'`).click();
+  await page.locator(`a >> text='${questionText}'`).click();
 
   const answerOptionText = randomString(10);
   await page.locator("#option_text").type(answerOptionText);

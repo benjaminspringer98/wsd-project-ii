@@ -1,27 +1,43 @@
 <% layout('./layouts/layout.eta') %>
 
-<h2><%= it.question.question_text %></h2>
+<h2>Quiz</h2>
 
-<% if (it.answerOptions && it.answerOptions.length > 0) { %>
-
-    <table id="answerOptions">
-        <tr>
-        <th>Option</th>   
-        </tr>
-    <% it.answerOptions.forEach(option => { %>
-    <tr>
-        <td><%= option.option_text %></td>
-        <td>
-            <form method="POST" action="/quiz/<%= it.topicId %>/questions/<%= it.question.id %>/options/<%= option.id %>">
-            <input type="submit" value="Choose"s/>
-            </form>
-        </td> 
-    </tr>
-    <% }); %>
-    </table>    
-
-<% } else { %>
-<p>Whoops, looks like this question has no answer options yet.</p>
-<p>You can add them <a href="/topics/<%= it.topicId %>/questions/<%= it.question.id %>">here</a></p>
-<p>Or continue with <a href="/quiz/<%= it.topicId %>">Next Question</a></p>
-<% } %>
+<div class="card border-secondary">
+    <div class="card-header bg-dark">
+        <h4 class="text-white"><%= it.question.question_text %></h4>
+    </div>
+    <div class="card-body">
+        <% if (it.answerOptions && it.answerOptions.length > 0) { %>
+                <table class="table" id="answerOptions">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Answer</th>
+                            <th>Select</th>   
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% it.answerOptions.forEach(option => { %>
+                        <tr>
+                            <td><%= option.option_text %></td>
+                            <td>
+                                <form method="POST" action="/quiz/<%= it.topicId %>/questions/<%= it.question.id %>/options/<%= option.id %>">
+                                <input type="submit" class="btn btn-primary" value="Choose"/>
+                                </form>
+                            </td> 
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>    
+        <% } else { %>
+            <p>Whoops, looks like this question has no answer options yet.</p>
+            <p>You can add them <a href="/topics/<%= it.topicId %>/questions/<%= it.question.id %>">here</a></p>
+            <p>Or continue with 
+                <ul class="nav nav-pills">
+                     <li class="nav-item">
+                        <a class="nav-link active" href="/quiz/<%= it.topicId %>"><i class="fa-solid fa-arrow-right"></i> Next question</a>
+                    </li>
+                </ul>
+            </p>
+        <% } %>
+    </div>
+</div>

@@ -1,16 +1,37 @@
 <% layout("./layouts/layout.eta") %>
 
-<h1>Drill and Practice</h1>
+<div class="d-flex flex-column align-items-center">
+  <div class="jumbotron">
+    <h1 class="display-4">Drill and Practice</h1>
+    <p class="lead">A simple web application where users can create questions, with
+      corresponding answers, and train them using a quiz</p>
+    <hr class="my-4">
+  </div>
 
-<% if (!it.user) { %>
-<p>You can <a href="/topics">Login here</a></p>
-<p>Not yet registered? You can do that <a href="/auth/register">here</a></p>
-<% } %>
+  <div class="d-flex">
+    <% if (!it.user) { %>
+      <div class="row">
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/auth/login" role="button">Login</a>
+      </p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/auth/register" role="button">Register</a>
+      </p>
+      </div>
+    <% } %>
 
-<h2>Statistics</h2>
-<p>Our users have:</p>
-<ul>
-    <li><%= it.topicCount %> topic<%= it.topicCount === 1 ? "" : "s"%>  available</li>
-    <li>Created <%= it.questionCount %> question<%= it.questionCount === 1 ? "" : "s"%></li>
-    <li>Answered <%= it.answerCount %> question<%= it.answerCount === 1 ? "" : "s"%></li>
-</ul>
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h3 class="card-title">Statistics</h3>
+        <p class="card-text">
+            <ul>
+                <li><%= it.topicCount %> topic<%= it.topicCount === 1 ? "" : "s"%>  available</li>
+                <li><%= it.questionCount %> question<%= it.questionCount === 1 ? "" : "s"%> created</li>
+                <li><%= it.answerCount %> question<%= it.answerCount === 1 ? "" : "s"%> answered</li>
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+    
+</div>

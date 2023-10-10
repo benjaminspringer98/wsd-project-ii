@@ -3,22 +3,22 @@
 <h2>Quiz</h2>
 
 <% if (it.message) { %>
-
-<%= it.message %>
-
+  <div class="alert alert-warning" role="alert">
+    <%= it.message %>
+  </div>
 <% } %>
 
 <% if (it.topics && it.topics.length > 0) { %>
 
 <p>Start your quiz by clicking on a topic below</p>
 
-<ul id="topics">
+<div class="list-group topics">
 <% it.topics.forEach(topic => { %>
-  <li>
-    <a href="/quiz/<%= topic.id %>"> <%= topic.name %> </a>
-  </li>
+    <a href="/quiz/<%= topic.id %>" class="list-group-item list-group-item-action list-group-item-primary">
+        <%= topic.name %>
+    </a>
 <% }); %>
-</ul>
+</div>
 
 <% } else { %>
 

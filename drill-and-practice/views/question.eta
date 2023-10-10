@@ -1,54 +1,75 @@
 <% layout('./layouts/layout.eta') %>
 
-<h2><%= it.question.question_text %> </h2>
+<h3><%= it.question.question_text %></h3>
 
 <p>Add answer options below</p>
 
 <% if (it.validationErrors) { %>
-<ul>
-    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-            <li><%= err %></li>
-        <% }); %>
-    <% }); %>
-</ul>
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+                <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+                    <li><%= err %></li>
+                <% }); %>
+            <% }); %>
+        </ul>
+    </div>
 <% } %>
 
 <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options">
-Answer:<br/>
-<input type="textarea" name="option_text" id="option_text" value="<%= it.text ? it.text : "" %>"/><br/>
-Correct answer
-<input type="checkbox" name="is_correct" id="is_correct"/><br/>
-<input type="submit" id="addAnswerOptionBtn" value="Add answer"/>
+<div class="form-group">
+    <label for="option_text">Answer</label>
+    <textarea class="form-control" id="option_text" name="option_text" rows="2" value="<%= it.text ? it.text : "" %>"></textarea>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="true" name="is_correct" id="is_correct">
+  <label class="form-check-label" for="is_correct">
+    Correct answer
+  </label>
+</div>
+<input type="submit" class="btn btn-primary" id="addAnswerOptionBtn" value="Add"/>
 </form>
 
-<h3>Answer options</h3>
+<hr/>
+<p>View and delete answer options below</p>
 
 <% if (it.answerOptions && it.answerOptions.length > 0) { %>
 
-<table id="answerOptions">
+
+<table class="table" id="answerOptions">
+    <thead class="table-dark">
+        <tr>
+            <th scope="col">Answer</th>
+            <th scope="col">Correct</th>
+            <th scope="col">Delete</th>
+        </tr>
+  </thead>
+  <tbody>
+    <% it.answerOptions.forEach(option => { %>
     <tr>
-    <th>Option</th>
-    <th>Correct answer</th>
+        <td><%= option.option_text %></td>
+        <td>
+            <% if (option.is_correct) { %>
+                <i class="fa-solid fa-check" style="color: #3aa512;"></i>
+            <% } else { %>
+                <i class="fa-solid fa-x" style="color: #e92d0c;"></i>
+            <% } %>
+        </td>
+        <td>
+            <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete">
+            <input type="submit" class="btn btn-danger" value="Delete" id="deleteAnswerOptionBtn"/>
+            </form>
+        </td>
     </tr>
-<% it.answerOptions.forEach(option => { %>
-  <tr>
-    <td><%= option.option_text %></td>
-    <td><%= option.is_correct %></td>
-    <td>
-        <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options/<%= option.id %>/delete">
-        <input type="submit" value="Delete" id="deleteAnswerOptionBtn"/>
-        </form>
-    </td>
-  </tr>
-<% }); %>
+    <% }); %>
+    </tbody>
 </table>
 
 <% } else { %>
 
 <p>No options yet</p>
 <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/delete">
-    <input type="submit" value="Delete question" id="deleteQuestionBtn"/>
+    <input type="submit" class="btn btn-danger" value="Delete question" id="deleteQuestionBtn"/>
  </form>
 
 <% } %>

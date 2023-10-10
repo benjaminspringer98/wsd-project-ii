@@ -1,37 +1,43 @@
 <% layout('./layouts/layout.eta') %>
 
-<h1> <%= it.topic.name %> </h1>
+<h2><%= it.topic.name %></h2>
 
 <% if (it.validationErrors) { %>
-<ul>
-    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-            <li><%= err %></li>
-        <% }); %>
-    <% }); %>
-</ul>
+  <div class="alert alert-danger" role="alert">
+  <ul>
+      <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+          <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+              <li><%= err %></li>
+          <% }); %>
+      <% }); %>
+    </ul>
+  </div>
 <% } %>
 
+<p>You can create a new question below</p>
 <form method="POST" action="/topics/<%= it.topic.id %>/questions">
-Question text:<br/>
-<input type="textarea" name="question_text" id="question_text" value="<%= it.text ? it.text : "" %>"/><br/>
-<input type="submit" id="createQuestionBtn" value="Add"/>
+  <div class="form-group">
+    <label for="question_text">Question:</label>
+    <textarea class="form-control" id="question_text" name="question_text" rows="3" value="<%= it.text ? it.text : "" %>"></textarea>
+  </div>
+  <input type="submit" class="btn btn-primary" id="createQuestionBtn" value="Create"/>
 </form>
 
+<hr/>
+
+<p>Click on a question below to view it</p>
 <% if (it.questions && it.questions.length > 0) { %>
 
-<ul id="questions">
+<div class="list-group questions">
 <% it.questions.forEach(question => { %>
-  <li>
-    <a href="/topics/<%= it.topic.id %>/questions/<%= question.id %>"> 
+    <a href="/topics/<%= it.topic.id %>/questions/<%= question.id %>" class="list-group-item list-group-item-action list-group-item-primary"> 
         <%= question.question_text %> 
-    </a>    
-  </li>
+    </a>
 <% }); %>
-</ul>
+</div>
 
 <% } else { %>
 
-<p>No questions</p>
+<p>No questions yet</p>
 
 <% } %>

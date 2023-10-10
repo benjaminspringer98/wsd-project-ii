@@ -1,21 +1,22 @@
 <% layout('./layouts/layout.eta') %>
 
 <h2>Available topics</h2>
+<p>Select a topic below to add questions</p>
 
 <% if (it.topics && it.topics.length > 0) { %>
 
-<ul id="topics">
+<div class="list-group topics">
 <% it.topics.forEach(topic => { %>
-  <li>
-    <a href="/topics/<%= topic.id %>"> <%= topic.name %> </a>
-    <% if (it.user.isAdmin) { %>
-    <form method="POST" action="/topics/<%= topic.id %>/delete">
-      <input type="submit" value="Delete"/>
-    </form>
-    <% } %>
-  </li>
+    <a href="/topics/<%= topic.id %>" class="list-group-item list-group-item-action list-group-item-primary">
+        <%= topic.name %>
+    </a>
+     <% if (it.user.isAdmin) { %>
+        <form method="POST" class="m-1" action="/topics/<%= topic.id %>/delete">
+          <input type="submit" class="btn btn-danger"value="Delete"/>
+        </form>
+        <% } %>
 <% }); %>
-</ul>
+</div>
 
 <% } else { %>
 
@@ -25,22 +26,27 @@
 
 <% if (it.user.isAdmin) { %>
 
-<h2>Add a topic!</h2>
+<hr/>
+<p>Create topic below</p>
 
 <% if (it.validationErrors) { %>
-<ul>
-    <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-        <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-            <li><%= err %></li>
-        <% }); %>
-    <% }); %>
-</ul>
+  <div class="alert alert-danger" role="alert">
+  <ul>
+      <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+          <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+              <li><%= err %></li>
+          <% }); %>
+      <% }); %>
+    </ul>
+  </div>
 <% } %>
 
 <form method="POST" action="/topics">
-Name:<br/>
-<input type="text" name="name" value="<%= it.name ? it.name : "" %>"/><br/>
-<input type="submit" value="Add"/>
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" name="name" id="name" value="<%= it.name ? it.name : "" %>"/>
+  </div>
+<input type="submit" class="btn btn-primary" value="Add" id="addTopicBtn"/>
 </form>
 
 <% } %>

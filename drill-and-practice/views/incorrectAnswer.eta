@@ -1,9 +1,15 @@
 <% layout("./layouts/layout.eta") %>
 
-<h2>Incorrect!</h2>
 
-<% if (it.correctAnswerOption) { %>
-<p>The correct option was <%= it.correctAnswerOption.option_text %></p>
-<% } %>
+<div class="alert alert-danger" role="alert">
+  <p><strong>Incorrect!</strong></p>
+  <% if (it.correctAnswerOption) { %>
+    <p>The correct option was: <%= it.correctAnswerOption.option_text %></p>
+  <% } %>
+</div>
 
-<a href="/quiz/<%= it.topicId %>">Next question<a>
+<ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link active" href="/quiz/<%= it.topicId %>"><i class="fa-solid fa-arrow-right"></i> Next question</a>
+    </li>
+</ul>
