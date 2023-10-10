@@ -2,7 +2,7 @@
 
 <h3><%= it.question.question_text %></h3>
 
-<p>Add answer options below (only one should be correct)</p>
+<p>Add answer options below (exactly one should be correct)</p>
 
 <% if (it.validationErrors) { %>
     <div class="alert alert-danger" role="alert">

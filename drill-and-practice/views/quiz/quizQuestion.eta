@@ -9,7 +9,7 @@
         <h4 class="text-white"><%= it.question.question_text %></h4>
     </div>
     <div class="card-body">
-        <% if (it.answerOptions && it.answerOptions.length > 0) { %>
+        <% if (it.answerOptions && it.answerOptions.length > 0 && it.answerOptions.some((o) => o.is_correct)) { %>
                 <table class="table" id="answerOptions">
                     <thead class="table-light">
                         <tr>
@@ -31,7 +31,7 @@
                     </tbody>
                 </table>    
         <% } else { %>
-            <p>Whoops, looks like this question has no answer options yet.</p>
+            <p>Whoops, looks like this question has no (correct) answer option yet.</p>
             <p>You can add them <a href="/topics/<%= it.topicId %>/questions/<%= it.question.id %>">here</a></p>
             <p>Or continue with 
                 <ul class="nav nav-pills">
