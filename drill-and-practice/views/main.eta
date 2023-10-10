@@ -3,7 +3,7 @@
 <div class="d-flex flex-column align-items-center">
   <div class="jumbotron">
     <h1 class="display-4">Drill and Practice</h1>
-    <p class="lead">A simple web application where users can create questions, with
+    <p class="lead">A simple web application where users can create questions for topics, with
       corresponding answers, and train them using a quiz</p>
     <hr class="my-4">
   </div>

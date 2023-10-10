@@ -17,17 +17,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarScroll">
           <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
-            <li class="nav-item">
+            <li class="nav-item m-2">
               <a class="nav-link" href="/"><i class="fa-solid fa-house"></i> Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item m-2">
               <a class="nav-link" href="/topics"><i class="fa-solid fa-book-open"></i> Topics</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item m-2">
             <a class="nav-link" href="/quiz"><i class="fa-solid fa-lightbulb"></i> Quiz</a>
             </li>
           </ul>
-          
           <form method="POST" action="/auth/logout">
             <span><%= it.user.email %></span>
             <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
