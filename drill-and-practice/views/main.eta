@@ -10,28 +10,26 @@
 
   <div class="d-flex">
     <% if (!it.user) { %>
-      <div class="row">
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/auth/login" role="button">Login</a>
-      </p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/auth/register" role="button">Register</a>
-      </p>
+      <div class="d-flex flex-column align-items-center m-4">
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="/auth/login" role="button">Login</a>
+        </p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="/auth/register" role="button">Register</a>
+        </p>
       </div>
     <% } %>
-
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <h3 class="card-title">Statistics</h3>
         <p class="card-text">
             <ul>
-                <li><%= it.topicCount %> topic<%= it.topicCount === 1 ? "" : "s"%>  available</li>
-                <li><%= it.questionCount %> question<%= it.questionCount === 1 ? "" : "s"%> created</li>
-                <li><%= it.answerCount %> question<%= it.answerCount === 1 ? "" : "s"%> answered</li>
+                <li id="topicCount"><%= it.topicCount %> topic<%= it.topicCount === 1 ? "" : "s"%>  available</li>
+                <li id="questionCount"><%= it.questionCount %> question<%= it.questionCount === 1 ? "" : "s"%> available</li>
+                <li id="answerCount"><%= it.answerCount %> question<%= it.answerCount === 1 ? "" : "s"%> answered</li>
             </ul>
         </p>
       </div>
     </div>
-  </div>
-    
+  </div>  
 </div>

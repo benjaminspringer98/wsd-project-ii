@@ -1,6 +1,8 @@
 import * as userService from "../../services/userService.js";
 import { bcrypt } from "../../deps.js";
 
+const authPath = "/auth";
+
 const login = async ({ request, response, state, render }) => {
   const body = request.body({ type: "form" });
   const params = await body.value;
@@ -10,7 +12,7 @@ const login = async ({ request, response, state, render }) => {
   const loginFailedMessage = "Login failed, invalid email or password.";
 
   if (!email || !password) {
-    render("login.eta");
+    render(`${authPath}/login.eta`);
     return;
   }
 
@@ -18,7 +20,7 @@ const login = async ({ request, response, state, render }) => {
     email,
   );
   if (userFromDatabase.length != 1) {
-    render("login.eta", { loginFailedMessage: loginFailedMessage });
+    render(`${authPath}/login.eta`, { loginFailedMessage: loginFailedMessage });
     return;
   }
 
@@ -29,7 +31,7 @@ const login = async ({ request, response, state, render }) => {
   );
 
   if (!isPasswordCorrect) {
-    render("login.eta", { loginFailedMessage: loginFailedMessage });
+    render(`${authPath}/login.eta`, { loginFailedMessage: loginFailedMessage });
     return;
   }
 
@@ -47,7 +49,7 @@ const logout = async ({ response, state }) => {
 
 const showLoginForm = ({ render, user, response }) => {
   if (!user) {
-    render("login.eta");
+    render(`${authPath}/login.eta`);
   } else {
     response.redirect("/topics");
   }

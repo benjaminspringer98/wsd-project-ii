@@ -13,40 +13,18 @@ test("Registered user can login", async ({ page }) => {
   await expect(page.locator("h2")).toHaveText("Available topics");
 });
 
+test("User can logout", async ({ page }) => {
+  const { email, password } = await register(page);
+  await login(email, password, page);
+
+  await page.locator("#logoutBtn").click();
+  await expect(page.locator("h1")).toHaveText("Login");
+});
+
 test("Unauthenticated user gets redirected to /auth/login", async ({ page }) => {
   await page.goto("/topics");
   await expect(page.locator("h1")).toHaveText("Login");
 });
-
-// test("Authenticated user can do quiz and gets shown feedback on correct answer", async ({ page }) => {
-//   const { email, password } = await register(page);
-//   await login(email, password, page);
-
-//   await page.goto("/topics");
-//   const topicName = "Finnish language";
-//   await page.locator(`#topics li >> text='${topicName}'`).click();
-//   const questionText = randomString(5);
-//   await page.locator("#question_text").type(questionText);
-//   await page.locator("#createQuestionBtn").click();
-//   await page.locator(`#questions li a >> text='${questionText}'`).click();
-
-//   const correctAnswerOptionText = randomString(10);
-//   await page.locator("#option_text").type(correctAnswerOptionText);
-//   await page.locator("#is_correct").check();
-//   await page.locator("#addAnswerOptionBtn").click();
-//   const incorrectAnswerOptionText = randomString(10);
-//   await page.locator("#option_text").type(incorrectAnswerOptionText);
-//   await page.locator("#addAnswerOptionBtn").click();
-
-//   await page.goto("/quiz");
-//   await page.locator(`#topics li >> text='${topicName}'`).click();
-
-//   await page.locator(
-//     `#answerOptions tr td >> text='${correctAnswerOptionText}'`,
-//   ).locator("~ td input[type=submit]").click();
-
-//   await expect(page.locator("h2")).toHaveText("Correct!");
-// });
 
 test("Authenticated user can view list of topics", async ({ page }) => {
   const { email, password } = await register(page);
@@ -152,9 +130,6 @@ test("Authenticated user can delete question answer option", async ({ page }) =>
   )
     .toHaveCount(0);
 });
-
-// TODO: Admin can create and delete topic? is it bad to hard code admin
-// credentials here?
 
 // helper functions
 

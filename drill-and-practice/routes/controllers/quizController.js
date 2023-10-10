@@ -2,8 +2,10 @@ import * as topicService from "../../services/topicService.js";
 import * as questionService from "../../services/questionService.js";
 import * as answerService from "../../services/answerService.js";
 
+const quizPath = "/quiz";
+
 const listTopics = async ({ render }) => {
-  render("quizTopics.eta", {
+  render(`${quizPath}/quizTopics.eta`, {
     topics: await topicService.findAll(),
   });
 };
@@ -13,7 +15,7 @@ const getRandomQuestion = async ({ params, response, render }) => {
   const question = await questionService.getRandomForTopicId(topicId);
 
   if (!question) {
-    render("quizTopics.eta", {
+    render(`${quizPath}/quizTopics.eta`, {
       topics: await topicService.findAll(),
       message: "No questions in this topic",
     });
@@ -29,7 +31,7 @@ const showQuestion = async ({ params, render }) => {
     questionId,
   );
 
-  render("quizQuestion.eta", {
+  render(`${quizPath}/quizQuestion.eta`, {
     question: question,
     topicId: params.tId,
     answerOptions: answerOptions,
@@ -52,13 +54,13 @@ const processAnswer = async ({ params, response, user }) => {
 };
 
 const correctAnswerProvided = async ({ params, render }) => {
-  await render("correctAnswer.eta", {
+  await render(`${quizPath}/correctAnswer.eta`, {
     topicId: params.tId,
   });
 };
 
 const incorrectAnswerProvided = async ({ params, render }) => {
-  await render("incorrectAnswer.eta", {
+  await render(`${quizPath}/incorrectAnswer.eta`, {
     topicId: params.tId,
     correctAnswerOption: await answerService.findCorrectOptionByQuestionId(
       params.qId,

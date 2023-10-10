@@ -29,7 +29,7 @@
           </ul>
           <form method="POST" action="/auth/logout">
             <span><%= it.user.email %></span>
-            <button type="submit" class="btn btn-secondary"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            <button type="submit" class="btn btn-secondary" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
           </form>
         </div>
       </div>

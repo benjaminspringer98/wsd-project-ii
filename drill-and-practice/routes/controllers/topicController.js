@@ -39,12 +39,22 @@ const create = async ({ request, response, render, user }) => {
       topics,
     });
   } else {
-    await topicService.create(
-      user.id,
-      topicData.name,
-    );
-
-    response.redirect("/topics");
+    try {
+      await topicService.create(
+        user.id,
+        topicData.name,
+      );
+      response.redirect("/topics");
+    } catch (error) { // if topic with name already exists
+      console.log(error);
+      render("topics.eta", {
+        ...topicData,
+        topics,
+        validationErrors: {
+          name: { unique: "Topic with same name already exists" },
+        },
+      });
+    }
   }
 };
 
