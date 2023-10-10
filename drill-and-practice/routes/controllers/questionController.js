@@ -48,8 +48,6 @@ const create = async ({ params, request, response, render, user }) => {
 };
 
 const view = async ({ params, render }) => {
-  console.log(params.tId);
-
   render("question.eta", {
     topic: await topicService.findById(params.tId),
     question: await questionService.findById(params.qId),

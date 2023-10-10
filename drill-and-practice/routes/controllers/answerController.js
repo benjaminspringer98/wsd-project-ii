@@ -33,6 +33,23 @@ const addAnswerOption = async ({ params, request, response, render }) => {
     questionId,
   );
 
+  // prevent question from having multiple correct answers
+  if (
+    answerOptions.some((option) => option.is_correct) &&
+    answerOptionData.isCorrect
+  ) {
+    render("question.eta", {
+      ...answerOptionData,
+      topic,
+      question,
+      answerOptions,
+      validationErrors: {
+        correctAnswer: { onlyOne: "Only one correct answer per question" },
+      },
+    });
+    return;
+  }
+
   if (!passes) {
     console.log(errors);
     answerOptionData.validationErrors = errors;

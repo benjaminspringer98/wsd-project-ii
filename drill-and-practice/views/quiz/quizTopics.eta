@@ -10,7 +10,7 @@
 
 <% if (it.topics && it.topics.length > 0) { %>
 
-<p>Start your quiz by clicking on a topic below</p>
+<p>Start a quiz by clicking on a topic below:</p>
 
 <div class="list-group topics">
 <% it.topics.forEach(topic => { %>

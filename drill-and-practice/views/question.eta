@@ -2,7 +2,7 @@
 
 <h3><%= it.question.question_text %></h3>
 
-<p>Add answer options below</p>
+<p>Add answer options below (only one should be correct)</p>
 
 <% if (it.validationErrors) { %>
     <div class="alert alert-danger" role="alert">
@@ -19,7 +19,7 @@
 <form method="POST" action="/topics/<%= it.topic.id %>/questions/<%= it.question.id %>/options">
 <div class="form-group">
     <label for="option_text">Answer</label>
-    <textarea class="form-control" id="option_text" name="option_text" rows="2" value="<%= it.text ? it.text : "" %>"></textarea>
+    <textarea class="form-control" id="option_text" name="option_text" rows="2"><%= it.text ? it.text : "" %></textarea>
 </div>
 <div class="form-check">
   <input class="form-check-input" type="checkbox" value="true" name="is_correct" id="is_correct">
