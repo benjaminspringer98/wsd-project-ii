@@ -2,8 +2,9 @@
 
 ## Intro
 
-Live version can be found [here] TODO: add url (don't worry if the page takes a
-while to load for the first time!)
+Live version can be found
+[here](https://wsd-project-ii-drill-and-practice.onrender.com/) (don't worry if
+the page takes a while to load for the first time!)
 
 This project was completed as part of the module Web Software Development, in
 the autumn term 2023, at Aalto University.

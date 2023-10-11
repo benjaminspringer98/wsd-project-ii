@@ -29,6 +29,8 @@ const checkAnswer = async ({ request, response }) => {
   const body = request.body({ type: "json" });
   const document = await body.value;
 
+  console.log(`received data: ${document}`);
+
   if (!document.questionId || !document.optionId) {
     response.status = 400;
     return;
@@ -37,10 +39,6 @@ const checkAnswer = async ({ request, response }) => {
   const correctOption = await answerService.findCorrectOptionByQuestionId(
     document.questionId,
   );
-  if (!correctOption) {
-    response.status = 400;
-    return;
-  }
 
   const isCorrect = correctOption.id === document.optionId;
   response.body = {
