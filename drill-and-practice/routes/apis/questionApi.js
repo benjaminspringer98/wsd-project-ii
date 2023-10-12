@@ -5,6 +5,7 @@ const getRandomQuestion = async ({ response }) => {
   const question = await questionService.getRandom();
   if (!question) {
     response.body = {};
+    return;
   }
 
   const answerOptions = await answerService.findAnswerOptionsByQuestionId(

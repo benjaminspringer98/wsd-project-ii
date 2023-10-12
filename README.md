@@ -26,13 +26,15 @@ given a random question from that topic, each round.
 - should have docker and docker compose installed before
 - run `docker-compose up` in the root directory of the project
 - application starts to run at http://localhost:7777
+- if you get the error `relation XY does not exist` just stop the containers and
+  restart them (sometimes Flyway does not start properly on the first run)
 
 ### Notes
 
 - Tests:
   - run E2E tests with Playwright:
     `docker-compose run --entrypoint=npx e2e-playwright playwright test && docker-compose rm -sf`
-  - the tests expect you to leave the standard topic "Finnish language" in the
+  - the tests expect you to leave the default topic "Finnish language" in the
     database to work correctly
   - note that I had to add the line `RUN npx playwright install` to the
     Playwright Dockerfile, because it just stopped working randomly at some
@@ -40,12 +42,12 @@ given a random question from that topic, each round.
   - if you are interested, the error was
     `Error: browserType.launch: Executable doesn't exist at /ms-playwright/chromium-1080/chrome-linux/chrome`
   - if you run into any problems, try removing the above mentioned line and
-    building the container again
+    building the image + container again
 - Development platform:
   - I'm working on a MacBook M2 (ARM64)
-  - therefore, I had to change the base images of the shopping-lists and
-    Playwright Dockerfiles
-  - if you're on another platform, and these are not working for you, please
+  - therefore, I had to change the base image of the drill-and-practice
+    Dockerfile
+  - if you're on another platform, and this is not working for you, please
     change the following:
     - in drill-and-practice Dockerfile, change `FROM lukechannings/deno:v1.29.2`
       back to `FROM denoland/deno:alpine-1.29.2`
